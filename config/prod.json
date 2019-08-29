@@ -1,0 +1,8 @@
+{
+    "imagesDirectory": "../minio-images/",
+    "port": 4030,
+    "apiKey": "",
+    "projectId": "",
+    "trainingKey": "",
+    "endPoint": ""
+}
