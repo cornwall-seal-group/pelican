@@ -2,12 +2,13 @@ const Boom = require('@hapi/boom');
 const Bcrypt = require('bcrypt');
 const config = require('config');
 const fs = require('fs');
-const Axios = require('axios');
-const FormData = require('form-data');
+const TrainingApi = require('@azure/cognitiveservices-customvision-training');
 
 const { projectId } = config;
 const { trainingKey } = config;
 const { endPoint } = config;
+
+const trainer = new TrainingApi.TrainingAPIClient(trainingKey, endPoint);
 
 const submitImages = request => {
     const { headers } = request;
@@ -15,7 +16,7 @@ const submitImages = request => {
     const requestApiKey = headers['x-api-key'] || '';
 
     const { payload } = request;
-    const { seal = '', images = [] } = payload;
+    const { seal = '', images = [], tag = '' } = payload;
     const { apiKey } = config;
 
     if (!apiKey) {
@@ -37,19 +38,13 @@ const submitImages = request => {
                 const fileUploadPromises = [];
                 images.forEach(image => {
                     const { imagesDirectory } = config;
-                    const modelUrl = `${endPoint}${projectId}/images`;
                     const imageUrl = `${imagesDirectory}${seal}/${image}`;
 
-                    const form = new FormData();
-                    form.append('files[0]', fs.createReadStream(imageUrl));
-                    const formHeaders = form.getHeaders();
-                    const axiosConfig = {
-                        headers: {
-                            ...formHeaders,
-                            'Training-Key': trainingKey
-                        }
-                    };
-                    fileUploadPromises.push(Axios.post(modelUrl, form, axiosConfig));
+                    fileUploadPromises.push(
+                        trainer.createImagesFromData(projectId, fs.readFileSync(imageUrl), {
+                            tagIds: [tag]
+                        })
+                    );
                 });
 
                 Promise.all(fileUploadPromises)
