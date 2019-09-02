@@ -50,7 +50,7 @@ const submitImages = request => {
 
                 Promise.all(fileUploadPromises)
                     .then(() => {
-                        getTags
+                        getTags()
                             .then(tags => {
                                 resolve(tags);
                             })
