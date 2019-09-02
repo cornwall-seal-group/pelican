@@ -91,8 +91,9 @@ const submitImages = request => {
                     if (equivalentTag.length > 0) {
                         const copiedImage = new Promise((resolved, rejectd) => {
                             Jimp.read(imageUrl).then(jimpImage => {
-                                jimpImage.flip(true, false);
-                                jimpImage.getBufferAsync(jimpImage.getMIME()).then(buffer => {
+                                const flipped = jimpImage.clone();
+                                flipped.flip(true, false);
+                                flipped.getBufferAsync(flipped.getMIME()).then(buffer => {
                                     trainer
                                         .createImagesFromData(projectId, buffer, {
                                             tagIds: [tagMatch[equivalentTag]]
