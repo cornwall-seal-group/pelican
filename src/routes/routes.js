@@ -4,7 +4,7 @@ const TagsController = require('../controllers/tags-controller');
 module.exports = [
     {
         method: 'POST',
-        path: '/api/v1/od/images',
+        path: '/api/v1/pose/images',
         config: {
             description: 'Accepts list of images to send to Object Detection model',
             tags: ['api', 'v1', 'images', 'AI', 'object detection']
