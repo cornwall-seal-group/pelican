@@ -3,6 +3,7 @@ const Bcrypt = require('bcrypt');
 const config = require('config');
 const fs = require('fs');
 const TrainingApi = require('@azure/cognitiveservices-customvision-training');
+const { getTags } = require('../utils/tags');
 
 const { projectId } = config;
 const { trainingKey } = config;
@@ -49,7 +50,14 @@ const submitImages = request => {
 
                 Promise.all(fileUploadPromises)
                     .then(() => {
-                        resolve(`Uploaded ${fileUploadPromises.length} images successfully`);
+                        getTags
+                            .then(tags => {
+                                resolve(tags);
+                            })
+                            .catch(e => {
+                                console.log(e);
+                                reject(e);
+                            });
                     })
                     .catch(e => {
                         console.log(e);
