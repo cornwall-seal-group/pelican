@@ -18,6 +18,6 @@ module.exports = [
             description: 'Fetches the tags associated with the body pose model',
             tags: ['api', 'v1', 'AI', 'tags']
         },
-        handler: TagsController.getTags
+        handler: TagsController.getTagData
     }
 ];
