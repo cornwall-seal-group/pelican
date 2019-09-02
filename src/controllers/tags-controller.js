@@ -19,7 +19,7 @@ const getTagData = request => {
     return new Promise((resolve, reject) => {
         Bcrypt.compare(requestApiKey, apiKey).then(match => {
             if (match) {
-                getTags
+                getTags()
                     .then(tags => {
                         resolve(tags);
                     })
