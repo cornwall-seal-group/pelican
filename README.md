@@ -34,4 +34,4 @@ b221998c-0d8b-46de-b6f9-8561b13690c5 wet-head-left
 To run the app using forever run:
 
 ```
-export NODE_ENV=prod && nohup forever start -c "node src/index.js" ./
+export NODE_ENV=prod && nohup forever start --uid "pelican" -c "node src/index.js" ./
