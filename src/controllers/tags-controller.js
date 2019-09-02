@@ -1,16 +1,9 @@
 const Boom = require('@hapi/boom');
 const Bcrypt = require('bcrypt');
 const config = require('config');
-const fs = require('fs');
-const TrainingApi = require('@azure/cognitiveservices-customvision-training');
+const { getTags } = require('../utils/tags');
 
-const { projectId } = config;
-const { trainingKey } = config;
-const { endPoint } = config;
-
-const trainer = new TrainingApi.TrainingAPIClient(trainingKey, endPoint);
-
-const getTags = request => {
+const getTagData = request => {
     const { headers } = request;
 
     const requestApiKey = headers['x-api-key'] || '';
@@ -26,8 +19,7 @@ const getTags = request => {
     return new Promise((resolve, reject) => {
         Bcrypt.compare(requestApiKey, apiKey).then(match => {
             if (match) {
-                trainer
-                    .getTags(projectId)
+                getTags
                     .then(tags => {
                         resolve(tags);
                     })
@@ -43,5 +35,5 @@ const getTags = request => {
 };
 
 module.exports = {
-    getTags
+    getTagData
 };
