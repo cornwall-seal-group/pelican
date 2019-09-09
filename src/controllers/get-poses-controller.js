@@ -30,6 +30,7 @@ const submitPoses = async function S(request) {
 
         for (let f = 0; f < folders.length; f++) {
             const folder = folders[f];
+            console.log('About to look through', folder);
             if (!ignoreFolders.includes(folder)) {
                 // go through all images in the originals folder
                 const sealOriginalsFolder = `${config.imagesDirectory}${folder}/originals`;
