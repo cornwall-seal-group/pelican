@@ -7,7 +7,7 @@ const { execSync } = require('child_process');
 
 const { imageHost, projectId, iterationName, predictionKey, endPoint } = config;
 
-const ignoreFolders = ['albums', 'zipfiles'];
+const ignoreFolders = ['albums', 'zipfiles', 'no-ids'];
 
 const submitPoses = async function S(request) {
     const { headers } = request;
