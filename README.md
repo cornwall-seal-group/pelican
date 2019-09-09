@@ -29,6 +29,15 @@ b221998c-0d8b-46de-b6f9-8561b13690c5 wet-head-left
 77a3c4f5-5ae6-494f-97ba-5ef38622c3a2 dry-body-left
 ```
 
+## Finding out the accuracy of the different tags
+
+In Azure you can find out the performance % of each tag type at this endpoint:
+
+`/customvision/v3.0/Training/projects/{projectId}/iterations/{iterationId}/performance?overlapThreshold=0.3&threshold=0.5`
+
+Added this as it was quite interesting to read and see how the tags compare.
+
+
 ## Running with forever
 
 To run the app using forever run:
