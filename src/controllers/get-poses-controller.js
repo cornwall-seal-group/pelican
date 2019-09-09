@@ -48,47 +48,41 @@ const submitPoses = async function S(request) {
                         }
                     };
 
-                    Axios.post(modelUrl, data, axiosConfig)
-                        .then(({ data: results }) => {
-                            const orderedPredictions = results.predictions.sort((a, b) => {
-                                const probabilityA = a.probability;
-                                const probabilityB = b.probability;
-                                if (probabilityA > probabilityB) {
-                                    return -1;
-                                }
-                                if (probabilityA < probabilityB) {
-                                    return 1;
-                                }
-                                return 0;
-                            });
-                            const topResult = orderedPredictions[0];
+                    const response = await Axios.post(modelUrl, data, axiosConfig);
+                    const { data: results } = response;
 
-                            // If greater than 50% we'll accept it
-                            if (topResult.probability > 0.5) {
-                                console.log('SUCCESS', topResult.probability, topResult.tagName, originalImagePath);
-                                const categorisedFolder = `${config.imagesDirectory}${folder}/${topResult.tagName}`;
-                                if (!fs.existsSync(categorisedFolder)) {
-                                    fs.mkdirSync(categorisedFolder);
-                                }
-                                const newImagePath = `${categorisedFolder}/${image}`;
-                                fs.renameSync(originalImagePath, newImagePath);
-                            } else {
-                                console.log(
-                                    'NO GOOD MATCH',
-                                    topResult.probability,
-                                    topResult.tagName,
-                                    originalImagePath
-                                );
-                                // Otherwise put the image in an un-categorised folder
-                                const unCategorisedFolder = `${config.imagesDirectory}${folder}/uncategorised`;
-                                if (!fs.existsSync(unCategorisedFolder)) {
-                                    fs.mkdirSync(unCategorisedFolder);
-                                }
-                                const newImagePath = `${unCategorisedFolder}/${image}`;
-                                fs.renameSync(originalImagePath, newImagePath);
-                            }
-                        })
-                        .catch(e => console.log(e));
+                    const orderedPredictions = results.predictions.sort((a, b) => {
+                        const probabilityA = a.probability;
+                        const probabilityB = b.probability;
+                        if (probabilityA > probabilityB) {
+                            return -1;
+                        }
+                        if (probabilityA < probabilityB) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    const topResult = orderedPredictions[0];
+
+                    // If greater than 50% we'll accept it
+                    if (topResult.probability > 0.5) {
+                        console.log('SUCCESS', topResult.probability, topResult.tagName, originalImagePath);
+                        const categorisedFolder = `${config.imagesDirectory}${folder}/${topResult.tagName}`;
+                        if (!fs.existsSync(categorisedFolder)) {
+                            fs.mkdirSync(categorisedFolder);
+                        }
+                        const newImagePath = `${categorisedFolder}/${image}`;
+                        fs.renameSync(originalImagePath, newImagePath);
+                    } else {
+                        console.log('NO GOOD MATCH', topResult.probability, topResult.tagName, originalImagePath);
+                        // Otherwise put the image in an un-categorised folder
+                        const unCategorisedFolder = `${config.imagesDirectory}${folder}/uncategorised`;
+                        if (!fs.existsSync(unCategorisedFolder)) {
+                            fs.mkdirSync(unCategorisedFolder);
+                        }
+                        const newImagePath = `${unCategorisedFolder}/${image}`;
+                        fs.renameSync(originalImagePath, newImagePath);
+                    }
                 }
             }
         }
