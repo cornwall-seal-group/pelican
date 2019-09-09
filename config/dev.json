@@ -1,8 +1,11 @@
 {
+    "imageHost": "",
     "imagesDirectory": "../minio-images/",
     "port": 4030,
     "apiKey": "$2b$10$GJ7IrH9StgaGfNI.U8a3GeSEgZXxykws8l3ay1lGg0F5kFxPapbuy",
     "projectId": "",
     "trainingKey": "",
-    "endPoint": ""
+    "endPoint": "",
+    "iterationName": "",
+    "predictionKey": ""
 }
