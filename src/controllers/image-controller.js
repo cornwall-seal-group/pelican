@@ -13,35 +13,45 @@ const { endPoint } = config;
 const trainer = new TrainingApi.TrainingAPIClient(trainingKey, endPoint);
 
 const knownTags = {
+    '2dc4a497-e5d7-46c8-843c-6ff4387978e0': 'wet-body-left',
+    '7b62b8e3-21e2-42c6-8c2c-b1d88b4c4a07': 'bottling-right',
+    '9ed9eaad-43c8-4ac2-aa59-6c3f53b32f9f': 'wet-head-straight',
+    '9f8e9065-7eff-4df0-93f6-ad3e98fbccc6': 'bottling-straight',
+    '36ad0cbd-0030-4cf8-8805-4f35be44f435': 'wet-head-right',
+    '41a01f55-48d1-4653-b65c-4474d59a9802': 'torso-left',
+    '77a3c4f5-5ae6-494f-97ba-5ef38622c3a2': 'dry-body-left',
     '92bbe322-bb7e-465f-b120-2da93350eed2': 'wet-body-right',
     '93c56914-198b-49cc-ac76-3ff183c69740': 'bottling-left',
-    '75dae3af-1c41-4952-a612-43dc4f7a42b0': 'dry-head-straight',
-    '36ad0cbd-0030-4cf8-8805-4f35be44f435': 'wet-head-right',
-    '77a3c4f5-5ae6-494f-97ba-5ef38622c3a2': 'dry-body-left',
-    '9ed9eaad-43c8-4ac2-aa59-6c3f53b32f9f': 'wet-head-straight',
-    '2dc4a497-e5d7-46c8-843c-6ff4387978e0': 'wet-body-left',
-    '55799bda-27d8-4c58-9f2c-811528845c58': 'dry-head-right',
-    '826a4746-1595-4829-9d2c-8524b5b2e623': 'dry-head-left',
+    '99d2e491-aa7b-4f40-a398-b40186e53636': 'dry-body-right',
+    '178b06e9-2f6a-4ff2-92d4-6ad1e4f2cf38': 'dry-body-back-right',
+    '377ab392-42fd-4edb-9972-f320e7462868': 'flat-body-left',
+    '6947594b-0984-470e-823a-396ea21a985c': 'torso-right',
+    '65618903-5dbf-4b12-b8a4-10a4e2dd5072': 'dry-body-back-left',
     'b221998c-0d8b-46de-b6f9-8561b13690c5': 'wet-head-left',
-    '9f8e9065-7eff-4df0-93f6-ad3e98fbccc6': 'bottling-straight',
-    '7b62b8e3-21e2-42c6-8c2c-b1d88b4c4a07': 'bottling-right',
-    '99d2e491-aa7b-4f40-a398-b40186e53636': 'dry-body-right'
+    'be4f4bf8-1ca2-4ffc-a276-3798e10c5b35': 'dry-belly-left',
+    'd19b038c-51ce-4dc4-be18-8f4dcb67cf19': 'flat-body-right',
+    'eaa4a8e2-a8ed-422e-ab9b-76bafee6c569': 'dry-belly-right'
 };
 
 const tagMatch = {
-    'wet-body-right': '92bbe322-bb7e-465f-b120-2da93350eed2',
     'bottling-left': '93c56914-198b-49cc-ac76-3ff183c69740',
-    'dry-head-straight': '75dae3af-1c41-4952-a612-43dc4f7a42b0',
-    'wet-head-right': '36ad0cbd-0030-4cf8-8805-4f35be44f435',
-    'dry-body-left': '77a3c4f5-5ae6-494f-97ba-5ef38622c3a2',
-    'wet-head-straight': '9ed9eaad-43c8-4ac2-aa59-6c3f53b32f9f',
-    'wet-body-left': '2dc4a497-e5d7-46c8-843c-6ff4387978e0',
-    'dry-head-right': '55799bda-27d8-4c58-9f2c-811528845c58',
-    'dry-head-left': '826a4746-1595-4829-9d2c-8524b5b2e623',
-    'wet-head-left': 'b221998c-0d8b-46de-b6f9-8561b13690c5',
-    'bottling-straight': '9f8e9065-7eff-4df0-93f6-ad3e98fbccc6',
     'bottling-right': '7b62b8e3-21e2-42c6-8c2c-b1d88b4c4a07',
-    'dry-body-right': '99d2e491-aa7b-4f40-a398-b40186e53636'
+    'bottling-straight': '9f8e9065-7eff-4df0-93f6-ad3e98fbccc6',
+    'dry-belly-left': 'be4f4bf8-1ca2-4ffc-a276-3798e10c5b35',
+    'dry-belly-right': 'eaa4a8e2-a8ed-422e-ab9b-76bafee6c569',
+    'dry-body-back-left': '65618903-5dbf-4b12-b8a4-10a4e2dd5072',
+    'dry-body-back-right': '178b06e9-2f6a-4ff2-92d4-6ad1e4f2cf38',
+    'dry-body-left': '77a3c4f5-5ae6-494f-97ba-5ef38622c3a2',
+    'dry-body-right': '99d2e491-aa7b-4f40-a398-b40186e53636',
+    'flat-body-left': '377ab392-42fd-4edb-9972-f320e7462868',
+    'flat-body-right': 'd19b038c-51ce-4dc4-be18-8f4dcb67cf19',
+    'torso-left': '41a01f55-48d1-4653-b65c-4474d59a9802',
+    'torso-right': '6947594b-0984-470e-823a-396ea21a985c',
+    'wet-body-left': '2dc4a497-e5d7-46c8-843c-6ff4387978e0',
+    'wet-body-right': '92bbe322-bb7e-465f-b120-2da93350eed2',
+    'wet-head-left': 'b221998c-0d8b-46de-b6f9-8561b13690c5',
+    'wet-head-right': '36ad0cbd-0030-4cf8-8805-4f35be44f435',
+    'wet-head-straight': '9ed9eaad-43c8-4ac2-aa59-6c3f53b32f9f'
 };
 const submitImages = request => {
     const { headers } = request;
