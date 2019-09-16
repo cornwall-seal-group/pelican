@@ -43,4 +43,4 @@ Added this as it was quite interesting to read and see how the tags compare.
 To run the app using forever run:
 
 ```
-export NODE_ENV=prod && nohup forever start --uid "pelican" -c "node src/index.js" ./
+export NODE_ENV=prod && nohup forever start -c "node src/index.js" ./
