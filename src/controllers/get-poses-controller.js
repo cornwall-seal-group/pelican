@@ -118,7 +118,13 @@ const resetPoses = async function r(request) {
                     if (subfolder !== 'originals') {
                         console.log('MOVING IMAGES FROM', subfolder, 'for', folder);
                         const files = fs.readdirSync(`${config.imagesDirectory}/${folder}/${subfolder}`);
+
                         if (files.length > 0) {
+                            const originalsFolder = `${config.imagesDirectory}/${folder}/originals/`;
+                            if (!fs.existsSync(originalsFolder)) {
+                                fs.mkdirSync(originalsFolder);
+                            }
+
                             execSync(
                                 `mv ${config.imagesDirectory}${folder}/${subfolder}/* ${
                                     config.imagesDirectory
